@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "jaran.nilsen@gmail.com",
+    "longName": "Pascial Watchface",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "Pascial",
+    "uuid": "09ff9a4d-adac-4ccf-9d76-29bdd8442c24",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
