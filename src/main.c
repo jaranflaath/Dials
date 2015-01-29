@@ -20,13 +20,21 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
   GPoint dial3_center = GPoint(bounds.size.w / 4, bounds.size.h / 4 * 3);
   GPoint dial4_center = GPoint(bounds.size.w / 4 * 3, bounds.size.h / 4 * 3);
 
-  GRect dial1_interval_top_rect = GRect(dial1_center.x - 15, dial1_center.y - 30, 30, 14);
-  GRect dial1_interval_bottom_rect = GRect(dial1_center.x - 15, dial1_center.y + 10, 30, 14);
+  GRect dial1_interval_top_rect = GRect(dial1_center.x - 15, dial1_center.y - 32, 30, 14);
+  GRect dial1_interval_left_rect = GRect(dial1_center.x - 36, dial1_center.y - 7, 30, 14);
+  GRect dial1_interval_right_rect = GRect(dial1_center.x + 8, dial1_center.y - 7, 30, 14);
+  GRect dial1_interval_bottom_rect = GRect(dial1_center.x - 15, dial1_center.y + 14, 30, 14);
 
   graphics_draw_text(ctx, "60", intervals_font, dial1_interval_top_rect,
     GTextOverflowModeFill, GTextAlignmentCenter, NULL);
 
+  graphics_draw_text(ctx, "15", intervals_font, dial1_interval_right_rect,
+    GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+  
   graphics_draw_text(ctx, "30", intervals_font, dial1_interval_bottom_rect,
+    GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+  
+  graphics_draw_text(ctx, "45", intervals_font, dial1_interval_left_rect,
     GTextOverflowModeFill, GTextAlignmentCenter, NULL);
 
   graphics_draw_circle(ctx, dial1_center, 30);
