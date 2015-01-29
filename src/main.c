@@ -14,7 +14,6 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
 
   GRect bounds = layer_get_bounds(this_layer);
 
-  GPoint center = GPoint(bounds.size.w / 2, (bounds.size.h / 2));
   GPoint dial1_center = GPoint(bounds.size.w / 4, bounds.size.h / 4);
   GPoint dial2_center = GPoint(bounds.size.w / 4 * 3, bounds.size.h / 4);
   GPoint dial3_center = GPoint(bounds.size.w / 4, bounds.size.h / 4 * 3);
