@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "datelib.h"
 
 static Window *s_main_window;
 static Layer *s_canvas;
@@ -6,6 +7,30 @@ static TimeUnits lowest_dial_unit = MINUTE_UNIT;
 static GFont intervals_font;
 static GColor background_color = GColorWhite;
 static GColor foreground_color = GColorBlack;
+
+static void draw_intervals_from_center(GContext *ctx, GPoint center, const char *intervals[]) {
+
+    GRect top_rect = GRect(center.x - 14, center.y - 34, 30, 14);
+    GRect left_rect = GRect(center.x - 36, center.y - 10, 30, 14);
+    GRect right_rect = GRect(center.x + 7, center.y - 10, 30, 14);
+    GRect bottom_rect = GRect(center.x - 14, center.y + 10, 30, 14);
+
+    graphics_draw_text(ctx,
+            intervals[0], intervals_font, top_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx,
+            intervals[1], intervals_font, right_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx,
+            intervals[2], intervals_font, bottom_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx,
+            intervals[3], intervals_font, left_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+}
 
 static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
 
@@ -35,73 +60,28 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
     graphics_fill_circle(ctx, dial4_center, 30);
 
 
-    GRect dial1_interval_top_rect = GRect(dial1_center.x - 15, dial1_center.y - 32, 30, 14);
-    GRect dial1_interval_left_rect = GRect(dial1_center.x - 36, dial1_center.y - 7, 30, 14);
-    GRect dial1_interval_right_rect = GRect(dial1_center.x + 8, dial1_center.y - 7, 30, 14);
-    GRect dial1_interval_bottom_rect = GRect(dial1_center.x - 15, dial1_center.y + 14, 30, 14);
+    const char *interval_seconds_minutes[4];
+    interval_seconds_minutes[0] = "60";
+    interval_seconds_minutes[1] = "15";
+    interval_seconds_minutes[2] = "30";
+    interval_seconds_minutes[3] = "45";
+    draw_intervals_from_center(ctx, dial1_center, interval_seconds_minutes);
 
-    graphics_draw_text(ctx, "60", intervals_font, dial1_interval_top_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+    draw_intervals_from_center(ctx, dial2_center, interval_seconds_minutes);
 
-    graphics_draw_text(ctx, "15", intervals_font, dial1_interval_right_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+    const char *interval_hours[4];
+    interval_hours[0] = "24";
+    interval_hours[1] = "6";
+    interval_hours[2] = "12";
+    interval_hours[3] = "18";
+    draw_intervals_from_center(ctx, dial3_center, interval_hours);
 
-    graphics_draw_text(ctx, "30", intervals_font, dial1_interval_bottom_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "45", intervals_font, dial1_interval_left_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    GRect dial2_interval_top_rect = GRect(dial2_center.x - 15, dial2_center.y - 32, 30, 14);
-    GRect dial2_interval_left_rect = GRect(dial2_center.x - 36, dial2_center.y - 7, 30, 14);
-    GRect dial2_interval_right_rect = GRect(dial2_center.x + 8, dial2_center.y - 7, 30, 14);
-    GRect dial2_interval_bottom_rect = GRect(dial2_center.x - 15, dial2_center.y + 14, 30, 14);
-
-    graphics_draw_text(ctx, "60", intervals_font, dial2_interval_top_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "15", intervals_font, dial2_interval_right_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "30", intervals_font, dial2_interval_bottom_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "45", intervals_font, dial2_interval_left_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    GRect dial3_interval_top_rect = GRect(dial3_center.x - 15, dial3_center.y - 32, 30, 14);
-    GRect dial3_interval_left_rect = GRect(dial3_center.x - 36, dial3_center.y - 7, 30, 14);
-    GRect dial3_interval_right_rect = GRect(dial3_center.x + 8, dial3_center.y - 7, 30, 14);
-    GRect dial3_interval_bottom_rect = GRect(dial3_center.x - 15, dial3_center.y + 14, 30, 14);
-
-    graphics_draw_text(ctx, "24", intervals_font, dial3_interval_top_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "6", intervals_font, dial3_interval_right_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "12", intervals_font, dial3_interval_bottom_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "18", intervals_font, dial3_interval_left_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    GRect dial4_interval_top_rect = GRect(dial4_center.x - 15, dial4_center.y - 32, 30, 14);
-    GRect dial4_interval_left_rect = GRect(dial4_center.x - 36, dial4_center.y - 7, 30, 14);
-    GRect dial4_interval_right_rect = GRect(dial4_center.x + 8, dial4_center.y - 7, 30, 14);
-    GRect dial4_interval_bottom_rect = GRect(dial4_center.x - 15, dial4_center.y + 14, 30, 14);
-
-    graphics_draw_text(ctx, "31", intervals_font, dial4_interval_top_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "8", intervals_font, dial4_interval_right_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "15", intervals_font, dial4_interval_bottom_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
-
-    graphics_draw_text(ctx, "23", intervals_font, dial4_interval_left_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+    const char *interval_days[4];
+    interval_days[0] = "31";
+    interval_days[1] = "8";
+    interval_days[2] = "15";
+    interval_days[3] = "23";
+    draw_intervals_from_center(ctx, dial4_center, interval_days);
 
 }
 
@@ -129,7 +109,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
 static void init() {
 
-    intervals_font = fonts_get_system_font(FONT_KEY_GOTHIC_14);
+    intervals_font = fonts_get_system_font(FONT_KEY_GOTHIC_18);
 
     s_main_window = window_create();
 
