@@ -4,12 +4,12 @@
         "configurable"
     ],
     "companyName": "jaran.nilsen@gmail.com",
-    "longName": "Pascial Watchface",
+    "longName": "Dials Watchface",
     "projectType": "native",
     "resources": {
         "media": []
     },
-    "shortName": "Pascial",
+    "shortName": "Dials",
     "uuid": "09ff9a4d-adac-4ccf-9d76-29bdd8442c24",
     "versionCode": 1,
     "versionLabel": "1.0",
