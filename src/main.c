@@ -36,6 +36,57 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
     graphics_draw_text(ctx, "45", intervals_font, dial1_interval_left_rect,
             GTextOverflowModeFill, GTextAlignmentCenter, NULL);
 
+    GRect dial2_interval_top_rect = GRect(dial2_center.x - 15, dial2_center.y - 32, 30, 14);
+    GRect dial2_interval_left_rect = GRect(dial2_center.x - 36, dial2_center.y - 7, 30, 14);
+    GRect dial2_interval_right_rect = GRect(dial2_center.x + 8, dial2_center.y - 7, 30, 14);
+    GRect dial2_interval_bottom_rect = GRect(dial2_center.x - 15, dial2_center.y + 14, 30, 14);
+
+    graphics_draw_text(ctx, "60", intervals_font, dial2_interval_top_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "15", intervals_font, dial2_interval_right_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "30", intervals_font, dial2_interval_bottom_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "45", intervals_font, dial2_interval_left_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    GRect dial3_interval_top_rect = GRect(dial3_center.x - 15, dial3_center.y - 32, 30, 14);
+    GRect dial3_interval_left_rect = GRect(dial3_center.x - 36, dial3_center.y - 7, 30, 14);
+    GRect dial3_interval_right_rect = GRect(dial3_center.x + 8, dial3_center.y - 7, 30, 14);
+    GRect dial3_interval_bottom_rect = GRect(dial3_center.x - 15, dial3_center.y + 14, 30, 14);
+
+    graphics_draw_text(ctx, "24", intervals_font, dial3_interval_top_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "6", intervals_font, dial3_interval_right_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "12", intervals_font, dial3_interval_bottom_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "18", intervals_font, dial3_interval_left_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    GRect dial4_interval_top_rect = GRect(dial4_center.x - 15, dial4_center.y - 32, 30, 14);
+    GRect dial4_interval_left_rect = GRect(dial4_center.x - 36, dial4_center.y - 7, 30, 14);
+    GRect dial4_interval_right_rect = GRect(dial4_center.x + 8, dial4_center.y - 7, 30, 14);
+    GRect dial4_interval_bottom_rect = GRect(dial4_center.x - 15, dial4_center.y + 14, 30, 14);
+
+    graphics_draw_text(ctx, "31", intervals_font, dial4_interval_top_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "8", intervals_font, dial4_interval_right_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "15", intervals_font, dial4_interval_bottom_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
+    graphics_draw_text(ctx, "23", intervals_font, dial4_interval_left_rect,
+            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+
     graphics_draw_circle(ctx, dial1_center, 30);
     graphics_draw_circle(ctx, dial2_center, 30);
     graphics_draw_circle(ctx, dial3_center, 30);
