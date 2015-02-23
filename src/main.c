@@ -1,5 +1,4 @@
 #include <pebble.h>
-#include "datelib.h"
 
 static Window *s_main_window;
 static Layer *s_canvas;
@@ -11,8 +10,8 @@ static GColor foreground_color = GColorBlack;
 static void draw_intervals_from_center(GContext *ctx, GPoint center, const char *intervals[]) {
 
     GRect top_rect = GRect(center.x - 14, center.y - 34, 30, 14);
-    GRect left_rect = GRect(center.x - 36, center.y - 10, 30, 14);
-    GRect right_rect = GRect(center.x + 7, center.y - 10, 30, 14);
+    GRect left_rect = GRect(center.x - 28, center.y - 10, 30, 14);
+    GRect right_rect = GRect(center.x, center.y - 10, 30, 14);
     GRect bottom_rect = GRect(center.x - 14, center.y + 10, 30, 14);
 
     graphics_draw_text(ctx,
@@ -21,7 +20,7 @@ static void draw_intervals_from_center(GContext *ctx, GPoint center, const char 
 
     graphics_draw_text(ctx,
             intervals[1], intervals_font, right_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+            GTextOverflowModeFill, GTextAlignmentRight, NULL);
 
     graphics_draw_text(ctx,
             intervals[2], intervals_font, bottom_rect,
@@ -29,7 +28,7 @@ static void draw_intervals_from_center(GContext *ctx, GPoint center, const char 
 
     graphics_draw_text(ctx,
             intervals[3], intervals_font, left_rect,
-            GTextOverflowModeFill, GTextAlignmentCenter, NULL);
+            GTextOverflowModeFill, GTextAlignmentLeft, NULL);
 }
 
 static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
