@@ -1,11 +1,13 @@
 #include <pebble.h>
 
 static Window *s_main_window;
+static Layer *window_layer;
 static Layer *s_canvas;
-static TimeUnits lowest_dial_unit = MINUTE_UNIT;
+static TimeUnits lowest_dial_unit = SECOND_UNIT;
 static GFont intervals_font;
 static GColor background_color = GColorWhite;
 static GColor foreground_color = GColorBlack;
+static int current_seconds;
 
 static void draw_intervals_from_center(GContext *ctx, GPoint center, const char *intervals[]) {
 
@@ -82,13 +84,20 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
     interval_days[3] = "23";
     draw_intervals_from_center(ctx, dial4_center, interval_days);
 
+    int radius = 28;
+    
+    int32_t second_angle = TRIG_MAX_ANGLE * current_seconds / 60;
+    int seconds_x = (sin_lookup(second_angle) * radius / TRIG_MAX_RATIO) + dial1_center.x;
+    int seconds_y = (-cos_lookup(second_angle) * radius / TRIG_MAX_RATIO) + dial1_center.y;
+    GPoint p_seconds = GPoint(seconds_x, seconds_y);
+    graphics_draw_line(ctx, dial1_center, p_seconds);
 }
 
 static void main_window_load(Window *window) {
 
     window_set_background_color(s_main_window, background_color);
 
-    Layer *window_layer = window_get_root_layer(s_main_window);
+    window_layer = window_get_root_layer(s_main_window);
     GRect window_bounds = layer_get_bounds(window_layer);
 
     s_canvas = layer_create(GRect(0, 0, window_bounds.size.w, window_bounds.size.h));
@@ -103,7 +112,10 @@ static void main_window_unload(Window *window) {
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
+    current_seconds = tick_time->tm_sec;
 
+    APP_LOG(APP_LOG_LEVEL_INFO, "Marking layer as dirty");
+    layer_mark_dirty(window_layer);
 }
 
 static void init() {
