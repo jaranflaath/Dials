@@ -8,12 +8,17 @@ static GFont intervals_font;
 static GColor background_color = GColorWhite;
 static GColor foreground_color = GColorBlack;
 static int current_seconds;
+static int current_minutes;
+static int current_hours;
+static int current_days;
+
+GPoint getDialHandEndPoint(GPoint *center, int unit_amount, int radius, int unit_max);
 
 static void draw_intervals_from_center(GContext *ctx, GPoint center, const char *intervals[]) {
 
     GRect top_rect = GRect(center.x - 14, center.y - 34, 30, 14);
-    GRect left_rect = GRect(center.x - 28, center.y - 10, 30, 14);
-    GRect right_rect = GRect(center.x, center.y - 10, 30, 14);
+    GRect left_rect = GRect(center.x - 28, center.y - 12, 30, 14);
+    GRect right_rect = GRect(center.x, center.y - 12, 30, 14);
     GRect bottom_rect = GRect(center.x - 14, center.y + 10, 30, 14);
 
     graphics_draw_text(ctx,
@@ -85,12 +90,26 @@ static void canvas_update_proc(Layer *this_layer, GContext *ctx) {
     draw_intervals_from_center(ctx, dial4_center, interval_days);
 
     int radius = 28;
-    
-    int32_t second_angle = TRIG_MAX_ANGLE * current_seconds / 60;
-    int seconds_x = (sin_lookup(second_angle) * radius / TRIG_MAX_RATIO) + dial1_center.x;
-    int seconds_y = (-cos_lookup(second_angle) * radius / TRIG_MAX_RATIO) + dial1_center.y;
-    GPoint p_seconds = GPoint(seconds_x, seconds_y);
+
+    GPoint p_seconds = getDialHandEndPoint(&dial1_center, current_seconds, radius, 60);
     graphics_draw_line(ctx, dial1_center, p_seconds);
+
+    GPoint p_minutes = getDialHandEndPoint(&dial2_center, current_minutes, radius, 60);
+    graphics_draw_line(ctx, dial2_center, p_minutes);
+
+    GPoint p_hours = getDialHandEndPoint(&dial3_center, current_hours, radius, 24);
+    graphics_draw_line(ctx, dial3_center, p_hours);
+
+    GPoint p_days = getDialHandEndPoint(&dial4_center, current_days, radius, 31);
+    graphics_draw_line(ctx, dial4_center, p_days);
+}
+
+GPoint getDialHandEndPoint(GPoint *center, int unit_amount, int radius, int unit_max) {
+    int32_t angle = TRIG_MAX_ANGLE * unit_amount / unit_max;
+    int x = (sin_lookup(angle) * radius / TRIG_MAX_RATIO) + (*center).x;
+    int y = (-cos_lookup(angle) * radius / TRIG_MAX_RATIO) + (*center).y;
+    GPoint point = GPoint(x, y);
+    return point;
 }
 
 static void main_window_load(Window *window) {
@@ -113,6 +132,9 @@ static void main_window_unload(Window *window) {
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
     current_seconds = tick_time->tm_sec;
+    current_minutes = tick_time->tm_min;
+    current_hours = tick_time->tm_hour;
+    current_days = tick_time->tm_mday;
 
     APP_LOG(APP_LOG_LEVEL_INFO, "Marking layer as dirty");
     layer_mark_dirty(window_layer);
